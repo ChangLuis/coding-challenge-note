@@ -1,15 +1,15 @@
 const getPagination = (offset, limit, total) => {
   const totalPage = Math.ceil(total / limit);
-  const currentPage = offset / limit + 1;
+  const currentPage = Math.floor(offset / limit) + 1;
 
   let renderPages = [currentPage];
   let currentRenderPagesLen = renderPages.length;
   while (currentRenderPagesLen < 5) {
-    const pushPage = renderPages[currentRenderPagesLen - 1] + 1;
-    const unShiftPage = renderPages[0] - 1;
+    const nextPage = renderPages[currentRenderPagesLen - 1] + 1;
+    const prevPage = renderPages[0] - 1;
 
-    if (unShiftPage >= 1) renderPages.unshift(unShiftPage);
-    if (pushPage <= totalPage) renderPages.push(pushPage)
+    if (prevPage >= 1) renderPages.unshift(prevPage)
+    if (nextPage <= totalPage) renderPages.push(nextPage)
 
     currentRenderPagesLen = renderPages.length;
   }
@@ -24,3 +24,6 @@ console.log(getPagination(15, 5, 33))
 console.log(getPagination(20, 5, 33))
 console.log(getPagination(25, 5, 33))
 console.log(getPagination(30, 5, 33))
+console.log(getPagination(30, 6, 33))
+console.log(getPagination(1, 6, 33))
+console.log(getPagination(7, 6, 33))
