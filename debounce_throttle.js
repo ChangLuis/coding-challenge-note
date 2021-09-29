@@ -2,24 +2,25 @@
 const debounce = (func, delay) => {
   let timeout;
 
-  return () => {
+  return function(...args) {
     if (timeout) clearTimeout(timeout);
 
-    timeout = setTimeout(func, delay);
+    timeout = setTimeout(() => func.apply(this, args), delay);
   }
 };
 
 const throttle = (func, timeout) => {
   let wait = false;
 
-  return () => {
+  return function(...args) {
     if (!wait) {
-      func.call();
       wait = true;
 
       setTimeout(() => {
         wait = false
       }, timeout)
+
+      return func.apply(this, args);
     }
   }
 };
